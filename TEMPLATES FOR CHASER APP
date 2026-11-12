@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChaserConnect - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white">
+    <div class="container mt-5">
+        <h2>ChaserConnect Login</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="card shadow mb-4 border border-danger">
+            <div class="card-header bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-danger">📈 NOAA / Storm Prediction Center (SPC) Convective Risk</h5>
+                <span class="badge bg-danger">Live Official Feed</span>
+            </div>
+            <div class="card-body text-center">
+                <p class="text-light mb-3">Official convective outlooks providing probabilistic tornado, hail, and damaging wind forecasts.</p>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="card bg-black border border-secondary p-3">
+                            <h6 class="text-warning fw-bold">Day 1 Convective Risk</h6>
+                            <p class="small text-muted mb-2">Today's severe weather outlook</p>
+                            <img src="https://www.spc.noaa.gov/products/outlook/day1otlk_0100_cat.gif" class="img-fluid rounded border border-secondary chaser-img mb-2" onclick="openLightbox(this.src)" alt="Day 1 Outlook">
+                            <a href="https://www.spc.noaa.gov/products/outlook/day1otlk.html" target="_blank" class="btn btn-outline-warning btn-sm">Full Day 1 Discussion</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-black border border-secondary p-3">
+                            <h6 class="text-warning fw-bold">Day 2 Convective Risk</h6>
+                            <p class="small text-muted mb-2">Tomorrow's risk area</p>
+                            <img src="https://www.spc.noaa.gov/products/outlook/day2otlk_1730_cat.gif" class="img-fluid rounded border border-secondary chaser-img mb-2" onclick="openLightbox(this.src)" alt="Day 2 Outlook">
+                            <a href="https://www.spc.noaa.gov/products/outlook/day2otlk.html" target="_blank" class="btn btn-outline-warning btn-sm">Full Day 2 Discussion</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-black border border-secondary p-3">
+                            <h6 class="text-warning fw-bold">Day 3 Convective Risk</h6>
+                            <p class="small text-muted mb-2">Extended threat outlook</p>
+                            <img src="https://www.spc.noaa.gov/products/outlook/day3otlk_1500_cat.gif" class="img-fluid rounded border border-secondary chaser-img mb-2" onclick="openLightbox(this.src)" alt="Day 3 Outlook">
+                            <a href="https://www.spc.noaa.gov/products/outlook/day3otlk.html" target="_blank" class="btn btn-outline-warning btn-sm">Full Day 3 Discussion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-5">
+        <div class="card p-4 shadow-lg border border-warning">
+            <h3 class="text-center text-warning mb-1 fw-bold">Create Chaser Account</h3>
+            <p class="text-center text-light mb-3 small">Join the nationwide operational network</p>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label text-light small fw-bold">Username / Team Name</label>
+                    <input type="text" class="form-control" name="username" placeholder="e.g. VGRT_Leader" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-light small fw-bold">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Create password" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-light small fw-bold">Chaser Bio / Target Regions</label>
+                    <input type="text" class="form-control" name="bio" placeholder="e.g. Tracking severe weather across AL, MS, & OK">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-light small fw-bold">Profile Picture (PFP)</label>
+                    <input type="file" class="form-control text-light" name="profile_pic" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-fb w-100 mb-3 py-2">Sign Up</button>
+            </form>
+            <div class="text-center">
+                <p class="text-light small">Already have an account? <a href="{{ url_for('login') }}" class="fw-bold">Log in</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow mb-3 border border-success">
+            <div class="card-header bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h5 class="mb-0 text-success">🛡️ Nationwide Public Storm Shelter Locator</h5>
+                <div class="d-flex gap-2 align-items-center flex-wrap">
+                    <input type="text" id="city-search" class="form-control form-control-sm" placeholder="Search City, State..." style="width: 180px;">
+                    <button id="search-btn" class="btn btn-outline-success btn-sm">Search</button>
+                    <button id="loc-btn" class="btn btn-success btn-sm fw-bold">📍 My GPS</button>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#shelterModal">➕ Register Shelter</button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="shelter-map" style="height: 600px; width: 100%; border-radius: 0 0 12px 12px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shelterModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light border border-secondary shadow-lg">
+      <div class="modal-header border-bottom border-secondary">
+        <h5 class="modal-title text-success">Register Public Storm Shelter</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/add_shelter" method="POST">
+          <div class="modal-body">
+              <div class="mb-3">
+                  <label class="form-label text-light small fw-bold">Shelter / Facility Name</label>
+                  <input type="text" class="form-control" name="name" placeholder="e.g. Community Safe Room" required>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 mb-3">
+                      <label class="form-label text-light small fw-bold">Latitude</label>
+                      <input type="text" class="form-control" name="lat" placeholder="e.g. 35.3395" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                      <label class="form-label text-light small fw-bold">Longitude</label>
+                      <input type="text" class="form-control" name="lng" placeholder="e.g. -97.4868" required>
+                  </div>
+              </div>
+              <div class="mb-3">
+                  <label class="form-label text-light small fw-bold">City / Address</label>
+                  <input type="text" class="form-control" name="address" placeholder="e.g. Moore, OK" required>
+              </div>
+              <div class="mb-3">
+                  <label class="form-label text-light small fw-bold">Details / Access Info</label>
+                  <input type="text" class="form-control" name="details" placeholder="e.g. Open 24/7 during severe weather warnings" required>
+              </div>
+          </div>
+          <div class="modal-footer border-top border-secondary">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-success btn-sm fw-bold">Save Shelter</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    const map = L.map('shelter-map').setView([38.5, -96.0], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    let shelters = {{ shelters | tojson }};
+    shelters.forEach(s => {
+        L.marker([s.lat, s.lng]).addTo(map)
+          .bindPopup('<b>🛡️ ' + s.name + '</b><br>' + s.address + '<br>' + s.details);
+    });
+
+    document.getElementById('search-btn').addEventListener('click', function() {
+        const query = document.getElementById('city-search').value;
+        if (!query) return;
+        fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query))
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    map.setView([data[0].lat, data[0].lon], 8);
+                } else {
+                    alert('Location not found.');
+                }
+            });
+    });
+
+    document.getElementById('loc-btn').addEventListener('click', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                map.setView([lat, lng], 10);
+                L.marker([lat, lng]).addTo(map).bindPopup("📍 Your Live GPS Location").openPopup();
+            }, function() {
+                alert('Unable to retrieve your location.');
+            });
+        }
+    });
+</script>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card p-4 mb-4 shadow text-center border border-warning">
+            <div class="d-flex justify-content-center mb-3">
+                <img src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}" class="avatar-lg shadow chaser-img" onclick="openLightbox(this.src)" alt="Profile Avatar">
+            </div>
+            <h3 class="fw-bold text-light mb-1">{{ user.username }}</h3>
+            <p class="text-warning small mb-3">📍 Nationwide Storm Chaser & Spotter</p>
+            <p class="text-light bg-black p-3 rounded border border-secondary">{{ user.bio }}</p>
+            <div class="d-flex justify-content-center gap-2 mt-2">
+                {% if current_user.id == user.id %}
+                <button class="btn btn-outline-warning btn-sm fw-bold" data-bs-toggle="modal" data-bs-target="#editProfileModal">⚙️ Edit Profile & PFP</button>
+                {% else %}
+                <a href="/dm/{{ user.id }}" class="btn btn-info btn-sm fw-bold">📬 Direct Message</a>
+                {% endif %}
+            </div>
+            <div class="text-muted small mt-3">{{ user.posts|length }} Field Reports Published</div>
+        </div>
+
+        <h5 class="mb-3 text-warning">Activity Feed for {{ user.username }}</h5>
+        {% for post in user.posts %}
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}" class="avatar-md me-3" alt="Avatar">
+                        <div>
+                            <h6 class="mb-0 fw-bold text-light">{{ user.username }}</h6>
+                            {% if post.location %}
+                            <small class="text-info">📍 {{ post.location }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if current_user.id == user.id %}
+                    <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-outline-danger btn-sm">Delete</a>
+                    {% endif %}
+                </div>
+                <p class="card-text fs-6 text-light">{{ post.content }}</p>
+                {% if post.image_file %}
+                <div class="mb-3 text-center bg-black rounded overflow-hidden">
+                    <img src="{{ url_for('static', filename='uploads/' + post.image_file) }}" class="img-fluid chaser-img" onclick="openLightbox(this.src)" alt="Chase Photo">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center text-muted py-4">
+            <p>No posts published by this chaser yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow mb-3 border border-warning">
+            <div class="card-header bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h5 class="mb-0 text-warning">🗺️ Nationwide Live Threat Map</h5>
+                <div class="d-flex gap-2 align-items-center flex-wrap">
+                    <a href="/export_csv" class="btn btn-outline-success btn-sm">📥 Export CSV Log</a>
+                    <input type="text" id="city-search" class="form-control form-control-sm" placeholder="Search City, State..." style="width: 180px;">
+                    <button id="search-btn" class="btn btn-outline-warning btn-sm">Search</button>
+                    <button id="loc-btn" class="btn btn-warning btn-sm fw-bold">📍 My GPS</button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="map" style="height: 600px; width: 100%; border-radius: 0 0 12px 12px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pinModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light border border-secondary shadow-lg">
+      <div class="modal-header border-bottom border-secondary">
+        <h5 class="modal-title text-warning">Drop Severe Weather Pin</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/add_pin" method="POST">
+          <div class="modal-body">
+              <input type="hidden" id="modal-lat" name="lat">
+              <input type="hidden" id="modal-lng" name="lng">
+              <div class="mb-3">
+                  <label class="form-label text-light small fw-bold">Hazard Type</label>
+                  <select class="form-control" name="phenomenon" required>
+                      <option value="Tornado">🌪️ Tornado Touchdown</option>
+                      <option value="Hail">🧊 Large Hail</option>
+                      <option value="Wind">💨 Destructive Wind Damage</option>
+                      <option value="WallCloud">☁️ Rotating Wall Cloud</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label class="form-label text-light small fw-bold">Description / Details</label>
+                  <input type="text" class="form-control" name="description" placeholder="e.g. Brief cone tornado crossing highway" required>
+              </div>
+          </div>
+          <div class="modal-footer border-top border-secondary">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-fb btn-sm fw-bold">Publish Pin</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    const map = L.map('map').setView([39.8283, -98.5795], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    let existingPins = {{ pins | tojson }};
+    existingPins.forEach(pin => {
+        L.marker([pin.lat, pin.lng]).addTo(map)
+          .bindPopup('<b>' + pin.phenomenon + '</b><br>' + pin.description);
+    });
+
+    const pinModal = new bootstrap.Modal(document.getElementById('pinModal'));
+    map.on('click', function(e) {
+        document.getElementById('modal-lat').value = e.latlng.lat;
+        document.getElementById('modal-lng').value = e.latlng.lng;
+        pinModal.show();
+    });
+
+    document.getElementById('search-btn').addEventListener('click', function() {
+        const query = document.getElementById('city-search').value;
+        if (!query) return;
+        fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query))
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    map.setView([data[0].lat, data[0].lon], 9);
+                } else {
+                    alert('Location not found.');
+                }
+            });
+    });
+
+    document.getElementById('loc-btn').addEventListener('click', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                map.setView([lat, lng], 10);
+                L.marker([lat, lng]).addTo(map).bindPopup("📍 Your Live GPS Location").openPopup();
+            }, function() {
+                alert('Unable to retrieve your location.');
+            });
+        }
+    });
+
+    const socket = io();
+    socket.on('new_pin', function(data) {
+        L.marker([data.lat, data.lng]).addTo(map)
+          .bindPopup('<b>' + data.phenomenon + '</b><br>' + data.description + '<br><small>Spotter: ' + data.username + '</small>')
+          .openPopup();
+    });
+</script>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="d-flex gap-2 mb-3">
+            <a href="/?tab=global" class="btn btn-sm {% if active_tab == 'global' %}btn-fb{% else %}btn-secondary{% endif %} fw-bold px-3 rounded-pill">🌍 Global Field Feed</a>
+            <a href="/?tab=my" class="btn btn-sm {% if active_tab == 'my' %}btn-fb{% else %}btn-secondary{% endif %} fw-bold px-3 rounded-pill">👤 My Chase Posts</a>
+        </div>
+
+        <div class="card p-3 mb-4 shadow-sm border border-warning">
+            <form action="/post" method="POST" enctype="multipart/form-data">
+                <div class="d-flex align-items-center mb-2">
+                    <img src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" class="avatar-md me-2 chaser-img" onclick="openLightbox(this.src)" alt="Avatar">
+                    <textarea class="form-control rounded-pill" name="content" rows="1" placeholder="What's happening in the field, {{ current_user.username }}?" required style="resize: none;"></textarea>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-secondary">
+                    <div class="d-flex gap-2 align-items-center">
+                        <input type="text" class="form-control form-control-sm" name="location" placeholder="📍 Location (e.g. Norman, OK)">
+                        <input type="file" class="form-control form-control-sm text-light" name="post_image" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-fb btn-sm px-4">Post</button>
+                </div>
+            </form>
+        </div>
+        
+        <h5 class="mb-3 text-warning">{% if active_tab == 'my' %}Your Chase History{% else %}Nationwide Field News Feed{% endif %}</h5>
+        <div id="feed-container">
+            {% for post in posts %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ url_for('static', filename='uploads/' + post.author_user.profile_pic) }}" class="avatar-md me-3 chaser-img" onclick="openLightbox(this.src)" alt="Avatar">
+                            <div>
+                                <a href="{{ url_for('profile', user_id=post.author_user.id) }}" class="fw-bold text-light text-decoration-none h6 mb-0">{{ post.author_user.username }}</a>
+                                <br>
+                                {% if post.location %}
+                                <small class="text-info">📍 {{ post.location }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="/dm/{{ post.author_user.id }}" class="btn btn-outline-info btn-sm">📬 DM</a>
+                            {% if current_user.id == post.user_id %}
+                            <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-outline-danger btn-sm">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p class="card-text fs-6 text-light">{{ post.content }}</p>
+                    {% if post.image_file %}
+                    <div class="mb-3 text-center bg-black rounded overflow-hidden">
+                        <img src="{{ url_for('static', filename='uploads/' + post.image_file) }}" class="img-fluid chaser-img" onclick="openLightbox(this.src)" alt="Chase Photo">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="d-flex justify-content-between align-items-center text-muted small mb-2 border-bottom border-secondary pb-2">
+                        <span>⚡ {{ post.likes|length }} Chaser Reactions</span>
+                        <span>💬 {{ post.comments|length }} Comments</span>
+                    </div>
+
+                    <div class="d-flex gap-1 mb-3 reaction-bar">
+                        <a href="/like/{{ post.id }}/⚡%20Bolt" class="btn btn-outline-warning btn-sm flex-fill">⚡ Bolt</a>
+                        <a href="/like/{{ post.id }}/🌪️%20Vortex" class="btn btn-outline-info btn-sm flex-fill">🌪️ Vortex</a>
+                        <a href="/like/{{ post.id }}/🔥%20Core" class="btn btn-outline-danger btn-sm flex-fill">🔥 Core</a>
+                        <a href="/like/{{ post.id }}/👍%20Like" class="btn btn-outline-primary btn-sm flex-fill">👍 Like</a>
+                    </div>
+
+                    <div class="mb-2 small text-muted">
+                        {% for like in post.likes %}
+                        <span class="badge bg-dark border border-secondary me-1">{{ like.author_user.username }}: {{ like.reaction_type }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="comments-section mt-2">
+                        <div class="mb-2">
+                            {% for comment in post.comments %}
+                            <div class="d-flex align-items-start mb-2 bg-black p-2 rounded border border-secondary">
+                                <img src="{{ url_for('static', filename='uploads/' + comment.author_user.profile_pic) }}" class="avatar-sm me-2 chaser-img" onclick="openLightbox(this.src)" style="width: 30px; height: 30px;" alt="Avatar">
+                                <div class="small">
+                                    <a href="{{ url_for('profile', user_id=comment.author_user.id) }}" class="fw-bold text-warning me-1 text-decoration-none">{{ comment.author_user.username }}:</a>
+                                    <span class="text-light">{{ comment.content }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <form action="/comment/{{ post.id }}" method="POST" class="d-flex gap-2 mt-2">
+                            <input type="text" class="form-control form-control-sm rounded-pill" name="content" placeholder="Write a comment..." required>
+                            <button type="submit" class="btn btn-outline-info btn-sm rounded-pill px-3">Reply</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div id="no-posts" class="text-center text-muted py-5">
+                <p>No posts on this feed yet. Be the first storm chaser to share an update!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    const socket = io();
+    socket.on('new_post', function(data) {
+        const noPosts = document.getElementById('no-posts');
+        if (noPosts) noPosts.remove();
+
+        const feedContainer = document.getElementById('feed-container');
+        const postCard = document.createElement('div');
+        postCard.className = 'card mb-3 shadow-sm';
+        
+        let imgHtml = '';
+        if (data.image_file) {
+            imgHtml = '<div class="mb-3 text-center bg-black rounded overflow-hidden"><img src="/static/uploads/' + data.image_file + '" class="img-fluid chaser-img" onclick="openLightbox(this.src)" alt="Chase Photo"></div>';
+        }
+
+        let locHtml = '';
+        if (data.location) {
+            locHtml = '<small class="text-info">📍 ' + data.location + '</small>';
+        }
+
+        let deleteBtn = '';
+        if ("{{ current_user.username }}" === data.username) {
+            deleteBtn = '<a href="/delete_post/' + data.post_id + '" class="btn btn-outline-danger btn-sm">Delete</a>';
+        }
+
+        postCard.innerHTML = '<div class="card-body"><div class="d-flex justify-content-between align-items-center mb-3"><div class="d-flex align-items-center"><img src="/static/uploads/' + data.profile_pic + '" class="avatar-md me-3 chaser-img" onclick="openLightbox(this.src)" alt="Avatar"><div><span class="fw-bold text-light h6 mb-0">' + data.username + '</span><br>' + locHtml + '</div></div>' + deleteBtn + '</div><p class="card-text fs-6 text-light">' + data.content + '</p>' + imgHtml + '<div class="text-muted small">Just posted via live WebSocket stream!</div></div>';
+        feedContainer.prepend(postCard);
+    });
+</script>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card shadow">
+            <div class="card-header bg-dark border-bottom border-secondary">
+                <h6 class="mb-0 text-warning fw-bold">📇 Chaser Directory</h6>
+            </div>
+            <div class="card-body p-2" style="max-height: 550px; overflow-y: auto;">
+                <div class="list-group list-group-flush">
+                    {% for u in users %}
+                    <a href="/dm/{{ u.id }}" class="list-group-item list-group-item-action bg-transparent text-light d-flex align-items-center gap-3 border-bottom border-secondary {% if recipient.id == u.id %}active bg-secondary{% endif %}">
+                        <img src="{{ url_for('static', filename='uploads/' + u.profile_pic) }}" class="avatar-sm" alt="User">
+                        <div>
+                            <div class="fw-bold">{{ u.username }}</div>
+                            <small class="text-muted text-truncate d-inline-block" style="max-width: 180px;">{{ u.bio }}</small>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="text-center text-muted p-3">No other spotters registered yet.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow mb-3">
+            <div class="card-header bg-dark border-bottom border-secondary d-flex align-items-center gap-3">
+                <img src="{{ url_for('static', filename='uploads/' + recipient.profile_pic) }}" class="avatar-sm" alt="Recipient">
+                <div>
+                    <h5 class="mb-0 text-warning fw-bold">Direct Message with {{ recipient.username }}</h5>
+                    <small class="text-muted">{{ recipient.bio }}</small>
+                </div>
+            </div>
+            <div id="dm-box" class="card-body" style="height: 450px; overflow-y: scroll; display: flex; flex-direction: column; gap: 10px;">
+                {% for dm in dms %}
+                <div class="d-flex align-items-start p-2 rounded bg-black border border-secondary {% if dm.sender_id == current_user.id %}ms-auto border-warning{% endif %}" style="max-width: 80%;">
+                    <img src="{{ url_for('static', filename='uploads/' + dm.sender.profile_pic) }}" class="avatar-sm me-2 chaser-img" onclick="openLightbox(this.src)" style="width: 30px; height: 30px;" alt="Avatar">
+                    <div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold text-warning small">{{ dm.sender.username }}</span>
+                            <small class="text-muted" style="font-size: 0.7rem;">{{ dm.timestamp.strftime('%H:%M') }}</small>
+                        </div>
+                        <p class="mb-0 text-light fs-6 mt-1">{{ dm.content }}</p>
+                    </div>
+                </div>
+                {% else %}
+                <div id="no-dms" class="text-center text-muted py-5">
+                    <p>No messages with {{ recipient.username }} yet. Send the first secure transmission!</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="card-footer bg-dark border-top border-secondary">
+                <form id="dm-form" action="/send_dm/{{ recipient.id }}" method="POST" class="d-flex gap-2">
+                    <input type="text" id="dm-input" class="form-control" name="content" placeholder="Transmit private message to {{ recipient.username }}..." required autocomplete="off">
+                    <button type="submit" class="btn btn-fb fw-bold px-4">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const socket = io();
+    const dmBox = document.getElementById('dm-box');
+    dmBox.scrollTop = dmBox.scrollHeight;
+
+    const currentUserId = {{ current_user.id }};
+    const recipientId = {{ recipient.id }};
+
+    socket.on('receive_dm', function(data) {
+        if ((data.sender_id === currentUserId && data.recipient_id === recipientId) ||
+            (data.sender_id === recipientId && data.recipient_id === currentUserId)) {
+            
+            const noDms = document.getElementById('no-dms');
+            if (noDms) noDms.remove();
+
+            const isMe = data.sender_id === currentUserId;
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'd-flex align-items-start p-2 rounded bg-black border border-secondary ' + (isMe ? 'ms-auto border-warning' : '');
+            msgDiv.style.maxWidth = '80%';
+            msgDiv.innerHTML = '<img src="/static/uploads/' + data.sender_pic + '" class="avatar-sm me-2 chaser-img" onclick="openLightbox(this.src)" style="width: 30px; height: 30px;" alt="Avatar"><div><div class="d-flex align-items-center gap-2"><span class="fw-bold text-warning small">' + data.sender_username + '</span><small class="text-muted" style="font-size: 0.7rem;">Just now</small></div><p class="mb-0 text-light fs-6 mt-1">' + data.content + '</p></div>';
+            dmBox.appendChild(msgDiv);
+            dmBox.scrollTop = dmBox.scrollHeight;
+        }
+    });
+</script>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mb-4 border border-warning">
+            <div class="card-header bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-warning">🚨 Automated NWS Emergency Dispatches</h5>
+                <span class="badge bg-danger">Background Daemon Active</span>
+            </div>
+            <div class="card-body">
+                <p class="text-light small mb-3">Archived log of official Tornado Warnings automatically captured and dispatched by your background NWS monitor.</p>
+                <div class="list-group">
+                    {% for log in logs %}
+                    <div class="list-group-item bg-black text-light border border-secondary mb-2 rounded">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1 text-danger fw-bold">⚠️ {{ log.headline }}</h6>
+                            <small class="text-muted">{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                        </div>
+                        <p class="mb-1 small text-info">📍 Impact Area: {{ log.area }}</p>
+                        <small class="text-muted">Severity: {{ log.severity }}</small>
+                    </div>
+                    {% else %}
+                    <div class="text-center text-muted py-4">
+                        <p>No emergency tornado dispatches logged yet. The background daemon is actively monitoring NWS feeds.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mb-3 border border-warning">
+            <div class="card-header bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-warning">💬 Nationwide Field Command Chat</h5>
+                <small class="text-muted">Instant WebSocket Comms</small>
+            </div>
+            <div id="chat-box" class="card-body" style="height: 500px; overflow-y: scroll; display: flex; flex-direction: column; gap: 10px;">
+                {% for msg in messages %}
+                <div class="d-flex align-items-start p-2 rounded bg-black border border-secondary">
+                    <img src="{{ url_for('static', filename='uploads/' + msg.author_user.profile_pic) }}" class="avatar-sm me-3 chaser-img" onclick="openLightbox(this.src)" alt="Avatar">
+                    <div>
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="/profile/{{ msg.author_user.id }}" class="fw-bold text-warning text-decoration-none">{{ msg.author_user.username }}</a>
+                        </div>
+                        <p class="mb-0 text-light fs-6 mt-1">{{ msg.content }}</p>
+                    </div>
+                </div>
+                {% else %}
+                <div id="no-chat" class="text-center text-muted py-5">
+                    <p>No chat messages yet. Drop the first transmission from the field!</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="card-footer bg-dark border-top border-secondary">
+                <form id="chat-form" class="d-flex gap-2">
+                    <input type="text" id="chat-input" class="form-control" placeholder="Transmit live field update..." required autocomplete="off">
+                    <button type="submit" class="btn btn-fb fw-bold px-4">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const socket = io();
+    const chatBox = document.getElementById('chat-box');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (text) {
+            socket.emit('send_message', { content: text });
+            chatInput.value = '';
+        }
+    });
+
+    socket.on('receive_message', function(data) {
+        const noChat = document.getElementById('no-chat');
+        if (noChat) noChat.remove();
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'd-flex align-items-start p-2 rounded bg-black border border-secondary';
+        msgDiv.innerHTML = '<img src="/static/uploads/' + data.profile_pic + '" class="avatar-sm me-3 chaser-img" onclick="openLightbox(this.src)" alt="Avatar"><div><div class="d-flex align-items-center gap-2"><a href="/profile/' + data.user_id + '" class="fw-bold text-warning text-decoration-none">' + data.username + '</a></div><p class="mb-0 text-light fs-6 mt-1">' + data.content + '</p></div>';
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+</script>
+{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ ChaserConnect | Professional Command Network</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body { background-color: #0d0e12; color: #f0f2f5; font-family: system-ui, -apple-system, sans-serif; }
+        .navbar { background-color: #16181d; border-bottom: 2px solid #ffaa00; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        .card { background-color: #1a1d24; border: 1px solid #2d323d; color: #f0f2f5; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+        .form-control, .form-control:focus { background-color: #262a33; color: #fff; border: 1px solid #3f4756; }
+        .form-control::placeholder { color: #8c96a6; opacity: 1; }
+        .btn-fb { background-color: #ffaa00; color: #0d0e12; font-weight: 800; border: none; }
+        .btn-fb:hover { background-color: #e09600; color: #0d0e12; }
+        .avatar-sm { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 2px solid #ffaa00; }
+        .avatar-md { width: 48px; height: 48px; object-fit: cover; border-radius: 50%; border: 2px solid #3f4756; }
+        .avatar-lg { width: 90px; height: 90px; object-fit: cover; border-radius: 50%; border: 3px solid #ffaa00; }
+        a { color: #ffaa00; text-decoration: none; }
+        a:hover { color: #ffc44d; text-decoration: underline; }
+        .chaser-img { cursor: pointer; opacity: 0.95; transition: opacity 0.2s; }
+        .chaser-img:hover { opacity: 1; }
+        #lightbox-modal { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; }
+        #lightbox-modal img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+        #lightbox-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .nws-banner { background-color: #b30000; color: #ffffff; font-size: 0.9rem; font-weight: bold; padding: 8px 15px; border-bottom: 2px solid #ffaa00; white-space: nowrap; overflow: hidden; position: relative; }
+        .nws-banner marquee { width: 100%; }
+        .reaction-bar { display: flex; gap: 5px; }
+    </style>
+</head>
+<body>
+    <div class="nws-banner">
+        <marquee scrollamount="5" id="nws-ticker">⚡ LIVE NWS FEED: Connecting to National Weather Service active warning database...</marquee>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark px-4 sticky-top">
+        <a class="navbar-brand fw-bold text-warning fs-4 d-flex align-items-center gap-2" href="/">
+            <span style="font-size: 1.4rem;">⚡</span> ChaserConnect
+        </a>
+        {% if current_user.is_authenticated %}
+        <div class="ms-auto d-flex align-items-center gap-3 flex-wrap py-1">
+            <a href="/" class="text-light text-decoration-none fw-semibold">🏠 Feed</a>
+            <a href="/chat" class="text-warning text-decoration-none fw-semibold">💬 Command Chat</a>
+            <a href="/dm/1" class="text-info text-decoration-none fw-semibold">📬 Direct Messages</a>
+            <a href="/map" class="text-warning text-decoration-none fw-semibold">🗺️ Threat Map</a>
+            <a href="/shelters" class="text-success text-decoration-none fw-semibold">🛡️ Shelters</a>
+            <a href="/spc" class="text-danger text-decoration-none fw-semibold">📈 SPC Outlooks</a>
+            <a href="/dispatches" class="text-warning text-decoration-none fw-semibold">🚨 Dispatches</a>
+            
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none text-light dropdown-toggle" data-bs-toggle="dropdown">
+                    <img src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" class="avatar-sm me-2" alt="Profile">
+                    <span class="fw-semibold">{{ current_user.username }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark bg-dark border border-secondary shadow">
+                    <li><a class="dropdown-item" href="{{ url_for('profile', user_id=current_user.id) }}">👤 View Profile</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal">⚙️ Edit Profile & PFP</a></li>
+                    <li><hr class="dropdown-divider border-secondary"></li>
+                    <li><a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </nav>
+
+    {% if current_user.is_authenticated %}
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light border border-secondary shadow-lg">
+          <div class="modal-header border-bottom border-secondary">
+            <h5 class="modal-title text-warning fw-bold">⚙️ Edit Chaser Profile & Avatar</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/update_profile" method="POST" enctype="multipart/form-data">
+              <div class="modal-body">
+                  <div class="text-center mb-3">
+                      <img src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" class="avatar-lg mb-2 shadow" alt="Current PFP">
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label text-light small fw-bold">New Profile Picture (PFP)</label>
+                      <input type="file" class="form-control text-light" name="profile_pic" accept="image/*">
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label text-light small fw-bold">Chaser Bio / Target Regions</label>
+                      <textarea class="form-control" name="bio" rows="3" required>{{ current_user.bio }}</textarea>
+                  </div>
+              </div>
+              <div class="modal-footer border-top border-secondary">
+                  <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-fb btn-sm fw-bold">Save Changes</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="container py-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show shadow" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="lightbox-modal" onclick="closeLightbox()">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Zoomed Photo">
+    </div>
+
+    <script>
+        function openLightbox(imgSrc) {
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox-modal').style.display = 'flex';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').style.display = 'none';
+        }
+
+        function fetchNWSAlerts() {
+            fetch('/api/nws_alerts')
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        let text = data.map(alert => '⚠️ [' + alert.severity.toUpperCase() + '] ' + alert.headline + ' (' + alert.area + ')').join(' &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; ');
+                        document.getElementById('nws-ticker').innerHTML = text;
+                    } else {
+                        document.getElementById('nws-ticker').innerHTML = '🟢 NWS STATUS: No active tornado or severe thunderstorm warnings reported nationwide at this moment.';
+                    }
+                }).catch(err => {
+                    document.getElementById('nws-ticker').innerHTML = '🟢 NWS STATUS: Monitoring severe weather systems nationwide.';
+                });
+        }
+        fetchNWSAlerts();
+        setInterval(fetchNWSAlerts, 60000);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
